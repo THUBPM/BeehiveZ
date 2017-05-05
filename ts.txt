@@ -1,0 +1,12 @@
+cmd
+
+cd C:\Documents and Settings\jint\My Documents\BeehiveZ
+
+java -Xms1024m -Xmx1024m -classpath BeehiveZ2_fat.jar cn.edu.thss.iise.beehivez.server.test.BehaviorFeatureExtractionPerformanceComparison
+
+java -Xms1024m -Xmx1024m -classpath BeehiveZ2_fat.jar cn.edu.thss.iise.beehivez.server.test.TARSComputingPerformanceComparison
+
+
+java -Xms1024m -Xmx1024m -classpath BeehiveZ2_fat.jar cn.edu.thss.iise.beehivez.server.test.TARSComputingPerformanceComparisonOnDB
+
+java -Xms1024m -Xmx1024m -classpath BeehiveZ2_fat.jar cn.edu.thss.iise.beehivez.experiment.petrinetwithdata.parallize.ParallelismRefactoringExperiment 10000

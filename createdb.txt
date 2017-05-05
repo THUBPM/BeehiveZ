@@ -1,0 +1,7 @@
+root
+drop database ciisyn;
+create database ciisyn;
+use ciisyn;
+source C:/Documents and Settings/jint/My Documents/BeehiveZ/sql/processrepository_MySQL.sql;
+show tables;
+exit;

@@ -1,0 +1,84 @@
+/**
+ * BeehiveZ is a business process model and instance management system.
+ * Copyright (C) 2011  
+ * Institute of Information System and Engineering, School of Software, Tsinghua University,
+ * Beijing, China
+ *
+ * Contact: jintao05@gmail.com 
+ *
+ * This program is a free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation with the version of 2.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+ /**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */options{  STATIC = false;  JAVA_UNICODE_ESCAPE = true;}PARSER_BEGIN(QueryParser)package cn.edu.thss.iise.beehivez.server.index.petrinetindex.relationindex.queryparser;import java.io.ByteArrayInputStream;import java.io.StringReader;import java.io.BufferedReader;import org.apache.lucene.search.BooleanQuery;import org.apache.lucene.search.TermQuery;import cn.edu.thss.iise.beehivez.server.index.petrinetindex.relationindex.TransitionRelationDocument;import org.apache.lucene.index.Term;import org.apache.lucene.search.BooleanClause;import org.apache.lucene.search.Query;import java.lang.String;import java.util.HashSet;import java.util.Iterator;import java.util.TreeSet;import cn.edu.thss.iise.beehivez.server.index.labelindex.LabelLuceneIndex;import cn.edu.thss.iise.beehivez.server.index.labelindex.SimilarLabelQueryResult;/**
+ * the most important function is parse
+ * given a query string, we can obtain the query expression through this function
+ *
+ * <Expression> ::= <AndExpression> (<Or> <AndExpression>)*
+ * <AndExpression> ::= (<RelationExpression> | <ExistExpression> | "("<Expression>")")
+ *                     (<And> (<NotExpression> | <RelationExpression> | <ExistExpression> | "("<Expression>")"))*
+ * <NotExpression> ::= <Not> (<RelationExpression> | <ExistExpression> | "("<Expression>")")
+ * <ExistExpression> ::= <Exist>(<Activity> | "("(<Activity>)+")")
+ * <RelationExpression> ::= <Activity> <Relation> <Activity>
+ * <Exist> ::= "exist"
+ * <Activity> ::= "\"" (~["\""])+ "\""
+ * <WhiteSpace> ::= " " | "\t" | "\n" | "\r" | "\u3000" | "" 
+ * <Relation> ::= (<ParallelWith> | <Exclude> | <Precede>)
+ * <ParallelWith> ::= "parallel with" | "=="
+ * <Exclude> ::= "exclude" | "##"
+ * <Precede> ::= "precede" | "->"
+ * <And> ::= "and" | "&&"
+ * <Or> ::= "or" | "||"
+ * <Not> ::= "not" | "!"
+ *
+ */public class QueryParser{  private LabelLuceneIndex labelIndex = null;  private float similarity = 1.0f;  public void setSemanticAide(LabelLuceneIndex index, float sim)  {    labelIndex = index;    similarity = sim;  }  public static void main(String args [])  {    String query = "\"a\"||\"b\" && \"c\"##\"d\" && !(!(exist \"e\" && \"e\"->\"f\"));";    System.out.println("query: " + query);    //QueryParser parser = new QueryParser(new ByteArrayInputStream(query.getBytes()));
+    StringReader sr = new StringReader(query);    BufferedReader br = new BufferedReader(sr);    QueryParser parser = new QueryParser(br);    try    {      Query q = parser.parse();      System.out.println(q.toString());      br.close();      sr.close();    }    catch (Exception e)    {      e.printStackTrace();    }  }}PARSER_END(QueryParser)/**
+ * In BNF, the query grammar is:
+ * <Expression> ::= <AndExpression> (<Or> <AndExpression>)*
+ * <AndExpression> ::= (<RelationExpression> | <ExistExpression> | "("<Expression>")")
+ *                     (<And> (<NotExpression> | <RelationExpression> | <ExistExpression> | "("<Expression>")"))*
+ * <NotExpression> ::= <Not> (<RelationExpression> | <ExistExpression> | "("<Expression>")")
+ * <ExistExpression> ::= <Exist>(<Activity> | "("(<Activity>)+")")
+ * <RelationExpression> ::= <Activity> <Relation> <Activity>
+ * <Exist> ::= "exist"
+ * <Activity> ::= "\"" (~["\""])+ "\""
+ * <WhiteSpace> ::= " " | "\t" | "\n" | "\r" | "\u3000" | "" 
+ * <Relation> ::= (<ParallelWith> | <Exclude> | <Precede>)
+ * <ParallelWith> ::= "parallel with" | "=="
+ * <Exclude> ::= "exclude" | "##"
+ * <Precede> ::= "precede" | "->"
+ * <And> ::= "and" | "&&"
+ * <Or> ::= "or" | "||"
+ * <Not> ::= "not" | "!"
+ */TOKEN :{  < #WHITESPACE :    (      " "    | "\t"    | "\n"    | "\r"    | "\u3000"    ) >| < EXIST : "exist" >| < PARALLELWITH :    (      "parallel with"    | "=="    ) >| < EXCLUDE :    (      "exclude"    | "##"    ) >| < PRECEDE :    (      "precede"    | "->"    ) >| < AND :    (      "AND"    | "and"    | "&&"    ) >| < OR :    (      "OR"    | "or"    | "||"    ) >| < NOT :    (      "NOT"    | "not"    | "!"    ) >}SKIP :{  < < WHITESPACE > >}/**
+ * the query string must be ended with ";"
+ */Query parse() :{  Query ret;  BooleanQuery.setMaxClauseCount(Integer.MAX_VALUE);}{  ret = Expression() ";"  {    return ret;  }}/**
+ * <Expression> ::= <AndExpression> (<Or> <AndExpression>)*
+ */Query Expression() :{  Query subQuery;  HashSet < Query > qs = new HashSet < Query > ();}{  subQuery = AndExpression()  {    qs.add(subQuery);  }  (    < OR > subQuery = AndExpression()    {      qs.add(subQuery);    }  )*  {    if (qs.size() > 1)    {      BooleanQuery bq = new BooleanQuery();      Iterator < Query > it = qs.iterator();      while (it.hasNext())      {        subQuery = it.next();        bq.add(subQuery, BooleanClause.Occur.SHOULD);      }      return bq;    }    else    {      return subQuery;    }  }}/**
+  * <AndExpression> ::= (<RelationExpression> | <ExistExpression> | "("<Expression>")")
+  *                     (<And> (<NotExpression> | (<RelationExpression> | <ExistExpression> | "("<Expression>")")))*
+  */Query AndExpression() :{  Query subQuery;  HashSet < Query > qs = new HashSet < Query > ();  BooleanQuery bq = new BooleanQuery();}{  (    subQuery = RelationExpression()  | subQuery = ExistExpression()  | "(" subQuery = Expression() ")"  )  {    qs.add(subQuery);    bq.add(subQuery, BooleanClause.Occur.MUST);  }  (    < AND >    (      subQuery = NotExpression()      {        if (qs.add(subQuery))        {          bq.add(subQuery, BooleanClause.Occur.MUST_NOT);        }      }    | subQuery = RelationExpression()      {        if (qs.add(subQuery))        {          bq.add(subQuery, BooleanClause.Occur.MUST);        }      }    | subQuery = ExistExpression()      {        if (qs.add(subQuery))        {          bq.add(subQuery, BooleanClause.Occur.MUST);        }      }    | "(" subQuery = Expression()      {        if (qs.add(subQuery))        {          bq.add(subQuery, BooleanClause.Occur.MUST);        }      }      ")"    )  )*  {    if (qs.size() > 1)    {      return bq;    }    else    {      return subQuery;    }  }}/**
+   * <NotExpression> ::= <Not> (<RelationExpression> | <ExistExpression> | "("<Expression>")")
+ */Query NotExpression() :{  Query subQuery;}{  < NOT >  (    subQuery = RelationExpression()  | subQuery = ExistExpression()  | "(" subQuery = Expression() ")"  )  {    return subQuery;  }}/**
+ * <ExistExpression> ::= <Exist>(<Activity>|"("(<Activity>)+")")
+ */Query ExistExpression() :{  Term term;  TermQuery tq = null;  String t;  HashSet < String > ts = new HashSet < String > ();  BooleanQuery subbq;}{  < EXIST >  (    t = Activity()    {      ts.add(t);    }  | "("    (      t = Activity()      {        ts.add(t);      }    )+    ")"  )  {    if (labelIndex != null)    {      // semantic expansion
+      if (ts.size() == 1)      {        BooleanQuery bq = new BooleanQuery();        Iterator < SimilarLabelQueryResult > itTask = labelIndex.getSimilarLabels(t, similarity).iterator();        tq = null;        while (itTask.hasNext())        {          t = itTask.next().getLabel();          term = new Term(TransitionRelationDocument.fieldTask, t);          tq = new TermQuery(term);          bq.add(tq, BooleanClause.Occur.SHOULD);        }        if (bq.getClauses().length > 1)        {          return bq;        }        else        {          if (tq != null)          {            return tq;          }          else          {            term = new Term(TransitionRelationDocument.fieldTask, t);            tq = new TermQuery(term);            return tq;          }        }      }      else      {        BooleanQuery bq = new BooleanQuery();        Iterator < String > it = ts.iterator();        while (it.hasNext())        {          t = it.next();          subbq = new BooleanQuery();          Iterator < SimilarLabelQueryResult > itTask = labelIndex.getSimilarLabels(t, similarity).iterator();          tq = null;          while (itTask.hasNext())          {            t = itTask.next().getLabel();            term = new Term(TransitionRelationDocument.fieldTask, t);            tq = new TermQuery(term);            subbq.add(tq, BooleanClause.Occur.SHOULD);          }          if (subbq.getClauses().length > 1)          {            bq.add(subbq, BooleanClause.Occur.MUST);          }          else          {            if (tq != null)            {              bq.add(tq, BooleanClause.Occur.MUST);            }            else            {              term = new Term(TransitionRelationDocument.fieldTask, t);              tq = new TermQuery(term);              bq.add(tq, BooleanClause.Occur.MUST);            }          }        }        return bq;      }    }    else    {      // no semantic expansion      if (ts.size() == 1)      {        term = new Term(TransitionRelationDocument.fieldTask, t);        tq = new TermQuery(term);        return tq;      }      else      {        BooleanQuery bq = new BooleanQuery();        Iterator < String > it = ts.iterator();        while (it.hasNext())        {          t = it.next();          term = new Term(TransitionRelationDocument.fieldTask, t);          tq = new TermQuery(term);          bq.add(tq, BooleanClause.Occur.MUST);        }        return bq;      }    }  }}/**
+ * <RelationExpression> ::= <Activity> <Relation> <Activity>
+ */Query RelationExpression() :{  String first, second;  int relation;  TermQuery tq = null;}{  first = Activity() relation = Relation() second = Activity()  {    if (labelIndex != null)    {      // semantic expansion
+      BooleanQuery bq = new BooleanQuery();      TreeSet < SimilarLabelQueryResult > pres = labelIndex.getSimilarLabels(first, similarity);      TreeSet < SimilarLabelQueryResult > sucs = labelIndex.getSimilarLabels(second, similarity);      Iterator < SimilarLabelQueryResult > itPre = pres.iterator();      tq = null;      while (itPre.hasNext())      {        String pre = itPre.next().getLabel();        Iterator < SimilarLabelQueryResult > itSuc = sucs.iterator();        while (itSuc.hasNext())        {          String suc = itSuc.next().getLabel();          Term term = new Term(TransitionRelationDocument.RELATIONFIELDS [ relation ], pre + TransitionRelationDocument.RELATIONCONNECTORS [ relation ] + suc);          tq = new TermQuery(term);          bq.add(tq, BooleanClause.Occur.SHOULD);        }      }      if (bq.getClauses().length > 1)      {        return bq;      }      else      {        if (tq != null)        {          return tq;        }        else        {          Term term = new Term(TransitionRelationDocument.RELATIONFIELDS [ relation ], first + TransitionRelationDocument.RELATIONCONNECTORS [ relation ] + second);          tq = new TermQuery(term);          return tq;        }      }    }    else    {      // no semantic expansion      Term term = new Term(TransitionRelationDocument.RELATIONFIELDS [ relation ], first + TransitionRelationDocument.RELATIONCONNECTORS [ relation ] + second);      tq = new TermQuery(term);      return tq;    }  }}/**
+  *  ACTIVITY : "\"" (~[ "\"" ])+ "\"" 
+  */String Activity() :{  String label;  Token t;  int len;}{  t = < "\"" (~[ "\"" ])+ "\"" >  {    len = t.image.length();    label = t.image.substring(1, len - 1);    return label.trim();  }}/**
+ * <Relation> ::= (<ParallelWith> | <Exclude> | <Precede>)
+ */int Relation() :{  int ret;}{  (    < PARALLELWITH >    {      ret = TransitionRelationDocument.PARALLELWITH;    }  | < EXCLUDE >    {      ret = TransitionRelationDocument.EXCLUDE;    }  | < PRECEDE >    {      ret = TransitionRelationDocument.PRECEDE;    }  )  {    return ret;  }}

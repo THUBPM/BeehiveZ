@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" path="parsemis/src"/>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="lucene3.0.2/contrib/wordnet/src/test">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry including="**/*.java" kind="src" path="lucene3.0.2/contrib/wordnet/src/java"/>
+	<classpathentry including="**/*.java" kind="src" path="lucene3.0.2/src/java"/>
+	<classpathentry including="**/*.java" kind="src" path="lucene3.0.2/src/demo"/>
+	<classpathentry including="**/*.java" kind="src" path="lucene3.0.2/src/test"/>
+	<classpathentry including="**/*.java" kind="src" path="lucene3.0.2/contrib/snowball/src/java"/>
+	<classpathentry kind="src" path="lucene3.0.2/contrib/snowball/src/test"/>
+	<classpathentry including="**/*.java" kind="src" path="jgrapht-0.8.1/testsrc"/>
+	<classpathentry including="**/*.java" kind="src" path="jgrapht-0.8.1/src"/>
+	<classpathentry including="**/*.java" kind="src" path="SimMetrics1.6.2/src"/>
+	<classpathentry including="**/*.java" kind="src" path="ProM5.2/src"/>
+	<classpathentry including="**/*.java" kind="src" path="pipe2.5/src"/>
+	<classpathentry kind="lib" path="lib/att.jar"/>
+	<classpathentry kind="lib" path="lib/colt.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="lib/GantzGraf-0.9.jar"/>
+	<classpathentry kind="lib" path="lib/htmlparser.jar"/>
+	<classpathentry kind="lib" path="lib/java_cup.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jgraph.jar"/>
+	<classpathentry kind="lib" path="lib/jgraphlayout.jar"/>
+	<classpathentry kind="lib" path="lib/jpowergraph-0.2-common.jar"/>
+	<classpathentry kind="lib" path="lib/jpowergraph-0.2-swing.jar"/>
+	<classpathentry kind="lib" path="lib/junit-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/jwnl.jar"/>
+	<classpathentry kind="lib" path="lib/JWordNetSim.jar"/>
+	<classpathentry kind="lib" path="lib/l2fprod-common-all.jar"/>
+	<classpathentry kind="lib" path="lib/MXMLib.jar"/>
+	<classpathentry kind="lib" path="lib/powerswing-0.3.jar"/>
+	<classpathentry kind="lib" path="lib/recommendations.jar"/>
+	<classpathentry kind="lib" path="lib/slickerbox0.5.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.2.jar"/>
+	<classpathentry kind="lib" path="lib/commons-math-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/holub.jar"/>
+	<classpathentry kind="lib" path="lib/jahmm-0.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/java-cup-11a-runtime.jar"/>
+	<classpathentry kind="lib" path="lib/jcommon-1.0.6.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.5.jar"/>
+	<classpathentry kind="lib" path="lib/jlfgr-1_0.jar"/>
+	<classpathentry kind="lib" path="lib/JRclient.jar"/>
+	<classpathentry kind="lib" path="lib/JRI.jar"/>
+	<classpathentry kind="lib" path="lib/jung-1.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/kaon2.jar"/>
+	<classpathentry kind="lib" path="lib/kxml2.jar"/>
+	<classpathentry kind="lib" path="lib/lpsolve55j.jar"/>
+	<classpathentry kind="lib" path="lib/mathCollection.jar"/>
+	<classpathentry kind="lib" path="lib/testng-5.7-jdk15.jar"/>
+	<classpathentry kind="lib" path="lib/weka.jar"/>
+	<classpathentry kind="lib" path="lib/WSML-grammar-20070417.jar"/>
+	<classpathentry kind="lib" path="lib/wsml2reasoner-noncom-v0_5.jar"/>
+	<classpathentry kind="lib" path="lib/wsmo-api-0.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/wsmo4j-0.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/AlphaPPProcessMiner.jar"/>
+	<classpathentry kind="lib" path="lib/TsinghuaAlphaProcessMiner.jar"/>
+	<classpathentry kind="con" path="DERBY_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/postgresql-8.4-701.jdbc4.jar"/>
+	<classpathentry kind="lib" path="lib/TGGraphLayout.jar"/>
+	<classpathentry kind="lib" path="lib/xmlunit1.0.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.13-bin.jar"/>
+	<classpathentry kind="lib" path="lib/YAWL_2.1_Standalone.jar"/>
+	<classpathentry kind="lib" path="lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="lib/prefuse.jar"/>
+	<classpathentry kind="lib" path="lib/parsemis-2008-12-01.jar"/>
+	<classpathentry kind="lib" path="lib/LogCompleteness-0.01-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/plugins/estimators/trivialEstimator.jar"/>
+	<classpathentry kind="lib" path="lib/plugins/units/TaskSetUnit.jar"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="lib/derby.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/JBPT"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

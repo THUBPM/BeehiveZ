@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config>
+  <length>
+    <es>"Log"," number of traces considered", "Actual number of classes"</es>
+  </length>
+  <class>
+	  <es>"Log"," number of traces considered","Observed number of classes", "Observed number of trace classes",
+"MLE","TG","Actual number of classes"
+	  </es>
+  </class>
+  <coverage>
+	  <es>"Log"," number of traces considered","Observed number of classes","Actual OUR",
+"ACE","BRK","MLE","TG"
+	  </es>
+  </coverage>
+  <!--statres>howmuch.parse.StatDSTrace</statres-->
+  <statres>howmuch.parse.StatTrace</statres>
+  <!--statres>howmuch.parse.StatTaskSet</statres-->
+  <confidence>0.9</confidence>
+  <epsilon>0.1</epsilon>
+  <tracedistribution>./conf/TraceDistB.xml</tracedistribution>
+</config>
+
+

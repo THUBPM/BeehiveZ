@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Tue Nov 24 15:51:48 CST 2009
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=BeehiveZ2_fat.jar
+manifest.mergeall=true
+manifest.mainclass=cn.edu.thss.iise.beehivez.client.BusinessProcessModelManager
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=

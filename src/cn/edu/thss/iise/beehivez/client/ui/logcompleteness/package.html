@@ -1,0 +1,50 @@
+<html>
+<title>The evaluation of information completeness of event logs</title>
+
+<body>
+
+	<P>Before process mining, it is necessarily important to determine whether or
+not an event log is <i>globally complete</i>, i.e. containing all possible
+behaviour of the underline process model, and/or <i>locally complete</i>,
+i.e. containing all direct sucession relations between tasks of the
+underline process model. Generally speaking the so-called <i>log
+completeness problem</i>  consists of these two questions.
+
+	<P>The problem has been studied and some approaches have been proposed to
+evalutated the completeness of an given event log. To make use of as well as
+to compare these approaches, a open source framework has been proposed and
+implemented in Java(TM). Each approach can be implemented as a stand
+alone Java(TM) package and ditribubted as a plugin of the framework. With the
+framework, the researcher or the developer of new approaches would not have
+to consider the parsing of event logs nor the collection of the evaluation
+results but focus only on the approaches themselves. Please refer to
+https://github.com/hunter99/CompletenessFramework for detail of the
+framework.
+
+	<P>By means of the plugin, <i>LogCompleteness</i>, for the Beehivez, the evaluation
+framework of log completeness can also be used as a feature of the Beehivez. 
+<UL>
+	<LI>Click the tool bar icon of massive balls and a panel will be
+	displayed,
+	<LI>input the event logs for the completeness evaluation, e.g.<i>
+		/data/logs/*.mxml</i>,
+	<LI>select the configuration file for the evaluation, e.g. <i>
+		conf/lx.xml</i>, and
+	<LI>click the 'Evaluation' button to start evaluating process.
+</UL>
+
+	<P>All evaluation results are stored the application directory with a file
+extention '.csv', which are in text format and can be opened with MS Office
+or LibreOffice suites.
+
+	<P>For more information on the evaluation of log completeness, please refer to
+http://bpmcenter.org/wp-content/uploads/reports/2012/BPM-12-04.pdf and my
+degree thesis (in Chinese).
+
+	<P>Hedong Yang (hdyang@gmail.com)<BR>
+May 24,2013
+
+</body>
+
+</html>
+

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- WARNING: Eclipse auto-generated file.
+              Any modifications will be overwritten.
+              To include a user specific buildfile here, simply create one in the same
+              directory with the processing instruction <?eclipse.ant.import?>
+              as the first entry and export the buildfile again. -->
+<project basedir="." default="build" name="BeehiveZ3">
+    <property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
+    <path id="Derby Libraries.libraryclasspath">
+        <pathelement location="../../../ForBeehiveZ/Eclipse/eclipse-java-indigo-SR2-win32/eclipse/plugins/org.apache.derby.core_10.8.1/derby.jar"/>
+        <pathelement location="../../../ForBeehiveZ/Eclipse/eclipse-java-indigo-SR2-win32/eclipse/plugins/org.apache.derby.core_10.8.1/derbyclient.jar"/>
+        <pathelement location="../../../ForBeehiveZ/Eclipse/eclipse-java-indigo-SR2-win32/eclipse/plugins/org.apache.derby.core_10.8.1/derbynet.jar"/>
+        <pathelement location="../../../ForBeehiveZ/Eclipse/eclipse-java-indigo-SR2-win32/eclipse/plugins/org.apache.derby.core_10.8.1/derbytools.jar"/>
+    </path>
+    <path id="BeehiveZ3.classpath">
+        <pathelement location="bin"/>
+        <pathelement location="lib/att.jar"/>
+        <pathelement location="lib/colt.jar"/>
+        <pathelement location="lib/commons-logging-1.0.4.jar"/>
+        <pathelement location="lib/commons-logging.jar"/>
+        <pathelement location="lib/GantzGraf-0.9.jar"/>
+        <pathelement location="lib/htmlparser.jar"/>
+        <pathelement location="lib/java_cup.jar"/>
+        <pathelement location="lib/jdom.jar"/>
+        <pathelement location="lib/jgraph.jar"/>
+        <pathelement location="lib/jgraphlayout.jar"/>
+        <pathelement location="lib/jpowergraph-0.2-common.jar"/>
+        <pathelement location="lib/jpowergraph-0.2-swing.jar"/>
+        <pathelement location="lib/junit-4.1.jar"/>
+        <pathelement location="lib/jwnl.jar"/>
+        <pathelement location="lib/JWordNetSim.jar"/>
+        <pathelement location="lib/l2fprod-common-all.jar"/>
+        <pathelement location="lib/MXMLib.jar"/>
+        <pathelement location="lib/powerswing-0.3.jar"/>
+        <pathelement location="lib/recommendations.jar"/>
+        <pathelement location="lib/slickerbox0.5.jar"/>
+        <pathelement location="lib/commons-collections-3.2.jar"/>
+        <pathelement location="lib/commons-math-1.1.jar"/>
+        <pathelement location="lib/holub.jar"/>
+        <pathelement location="lib/jahmm-0.6.1.jar"/>
+        <pathelement location="lib/java-cup-11a-runtime.jar"/>
+        <pathelement location="lib/jcommon-1.0.6.jar"/>
+        <pathelement location="lib/jfreechart-1.0.5.jar"/>
+        <pathelement location="lib/jlfgr-1_0.jar"/>
+        <pathelement location="lib/JRclient.jar"/>
+        <pathelement location="lib/JRI.jar"/>
+        <pathelement location="lib/jung-1.7.6.jar"/>
+        <pathelement location="lib/kaon2.jar"/>
+        <pathelement location="lib/kxml2.jar"/>
+        <pathelement location="lib/lpsolve55j.jar"/>
+        <pathelement location="lib/mathCollection.jar"/>
+        <pathelement location="lib/testng-5.7-jdk15.jar"/>
+        <pathelement location="lib/weka.jar"/>
+        <pathelement location="lib/WSML-grammar-20070417.jar"/>
+        <pathelement location="lib/wsml2reasoner-noncom-v0_5.jar"/>
+        <pathelement location="lib/wsmo-api-0.6.1.jar"/>
+        <pathelement location="lib/wsmo4j-0.6.1.jar"/>
+        <pathelement location="lib/AlphaPPProcessMiner.jar"/>
+        <pathelement location="lib/TsinghuaAlphaProcessMiner.jar"/>
+        <path refid="Derby Libraries.libraryclasspath"/>
+        <pathelement location="lib/postgresql-8.4-701.jdbc4.jar"/>
+        <pathelement location="lib/TGGraphLayout.jar"/>
+        <pathelement location="lib/xmlunit1.0.jar"/>
+        <pathelement location="lib/mysql-connector-java-5.1.13-bin.jar"/>
+        <pathelement location="lib/YAWL_2.1_Standalone.jar"/>
+        <pathelement location="lib/antlr-2.7.6.jar"/>
+        <pathelement location="lib/prefuse.jar"/>
+        <pathelement location="lib/parsemis-2008-12-01.jar"/>
+    </path>
+    <target name="init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="jgrapht-0.8.1/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="ProM5.2/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+                <exclude name="cn/edu/thss/iise/beehivez/server/datamanagement/OplogWriter.aj"/>
+                <exclude name="cn/edu/thss/iise/beehivez/server/datamanagement/OplogWriter.aj"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="parsemis/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/src/java">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/contrib/wordnet/src/java">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/src/test">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/contrib/wordnet/src/test">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/src/demo">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/contrib/snowball/src/java">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="lucene3.0.2/contrib/snowball/src/test">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="jgrapht-0.8.1/testsrc">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="SimMetrics1.6.2/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="pipe2.5/src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="clean" name="cleanall"/>
+    <target depends="build-subprojects,build-project" name="build"/>
+    <target name="build-subprojects"/>
+    <target depends="init" name="build-project">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="jgrapht-0.8.1/src"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="ProM5.2/src"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="src"/>
+            <exclude name="cn/edu/thss/iise/beehivez/server/datamanagement/OplogWriter.aj"/>
+            <exclude name="cn/edu/thss/iise/beehivez/server/datamanagement/OplogWriter.aj"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="parsemis/src"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/src/java"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/contrib/wordnet/src/java"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/src/test"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/contrib/wordnet/src/test"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/src/demo"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/contrib/snowball/src/java"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="lucene3.0.2/contrib/snowball/src/test"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="jgrapht-0.8.1/testsrc"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="SimMetrics1.6.2/src"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" source="${source}" target="${target}">
+            <src path="pipe2.5/src"/>
+            <classpath refid="BeehiveZ3.classpath"/>
+        </javac>
+    </target>
+    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
+    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
+        <copy todir="${ant.library.dir}">
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </copy>
+        <unzip dest="${ant.library.dir}">
+            <patternset includes="jdtCompilerAdapter.jar"/>
+            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
+        </unzip>
+    </target>
+    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
+        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+        <antcall target="build"/>
+    </target>
+    <target name="BusinessProcessModelManager">
+        <java classname="cn.edu.thss.iise.beehivez.client.BusinessProcessModelManager" failonerror="true" fork="yes">
+            <classpath refid="BeehiveZ3.classpath"/>
+        </java>
+    </target>
+	<target name="jar" depends="build">
+		<jar jarfile="all.jar" basedir="bin" manifest="MANIFEST.MF">
+		<!-- manifest> 			             
+			<attribute name="Main-Class" value="cn.edu.thss.iise.beehivez.client.BusinessProcessModelManager"/>  
+			<attribute name="Class-Path" value="${BeehiveZ3.classpath}"></attribute>  
+		</manifest --> 
+		</jar>		        
+	</target>
+</project>
