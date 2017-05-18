@@ -21,9 +21,7 @@
  */
 package cn.edu.thss.iise.beehivez.util.loggenerator;
 
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 import org.jdom.Document;
@@ -214,16 +212,6 @@ public class LogIO {
 		if (fileName == null) {
 			fileName = this.fileName;
 		}
-		
-		File logFile = new File(fileName);
-		if(!logFile.exists()) {
-			try {
-				logFile.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} 
 
 		try {
 			XMLOutputter XMLOut = new XMLOutputter();

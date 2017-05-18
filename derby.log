@@ -1,14 +1,14 @@
 ----------------------------------------------------------------
-2016-06-02 12:54:02.166 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.1.0 - (938214): instance a816c00e-0155-112d-7e2e-000037390430 
-on database directory C:\Users\永博\workspace\BeehiveZ3\processrepository   with class loader sun.misc.Launcher$AppClassLoader@2a139a55
+2015-05-16 02:40:20.918 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.6.1.0 - (938214): instance a816c00e-014d-5a98-00a7-0000055720b0 
+on database directory /Users/little/Documents/论文撰写/BeehiveZ3/processrepository   with class loader sun.misc.Launcher$AppClassLoader@4554617c
 
 
-2016-06-02 12:54:02.253 GMT:
-Shutting down instance a816c00e-0155-112d-7e2e-000037390430 with class loader sun.misc.Launcher$AppClassLoader@2a139a55 
+2015-05-16 02:40:21.000 GMT:
+Shutting down instance a816c00e-014d-5a98-00a7-0000055720b0 with class loader sun.misc.Launcher$AppClassLoader@4554617c 
 ----------------------------------------------------------------
-2016-06-02 12:54:02.285 GMT Thread[main,5,main] Cleanup action starting
-java.sql.SQLException: Failed to start database 'processrepository' with class loader sun.misc.Launcher$AppClassLoader@2a139a55, see the next exception for details.
+2015-05-16 02:40:21.013 GMT Thread[main,5,main] Cleanup action starting
+java.sql.SQLException: Failed to start database 'processrepository' with class loader sun.misc.Launcher$AppClassLoader@4554617c, see the next exception for details.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.newEmbedSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.Util.seeNextException(Unknown Source)
@@ -19,8 +19,8 @@ java.sql.SQLException: Failed to start database 'processrepository' with class l
 	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
 	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<init>(DatabaseAccessor.java:119)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<clinit>(DatabaseAccessor.java:94)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DataManager.<init>(DataManager.java:62)
@@ -29,14 +29,14 @@ java.sql.SQLException: Failed to start database 'processrepository' with class l
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.Create_rightpanel(ModelIOFramePlugin.java:612)
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.<init>(ModelIOFramePlugin.java:145)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModule(ClientFrame.java:947)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModules(ClientFrame.java:967)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.start(ClientFrame.java:208)
 	at cn.edu.thss.iise.beehivez.client.BusinessProcessModelManager.main(BusinessProcessModelManager.java:49)
-Caused by: java.sql.SQLException: Failed to start database 'processrepository' with class loader sun.misc.Launcher$AppClassLoader@2a139a55, see the next exception for details.
+Caused by: java.sql.SQLException: Failed to start database 'processrepository' with class loader sun.misc.Launcher$AppClassLoader@4554617c, see the next exception for details.
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory.getSQLException(Unknown Source)
 	at org.apache.derby.impl.jdbc.SQLExceptionFactory40.wrapArgsForTransportAcrossDRDA(Unknown Source)
 	... 27 more
@@ -85,8 +85,8 @@ java.sql.SQLException: The conglomerate (16) requested does not exist.
 	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
 	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<init>(DatabaseAccessor.java:119)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<clinit>(DatabaseAccessor.java:94)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DataManager.<init>(DataManager.java:62)
@@ -95,9 +95,9 @@ java.sql.SQLException: The conglomerate (16) requested does not exist.
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.Create_rightpanel(ModelIOFramePlugin.java:612)
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.<init>(ModelIOFramePlugin.java:145)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModule(ClientFrame.java:947)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModules(ClientFrame.java:967)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.start(ClientFrame.java:208)
@@ -148,8 +148,8 @@ java.sql.SQLException: The conglomerate (16) requested does not exist.
 	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
 	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<init>(DatabaseAccessor.java:119)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<clinit>(DatabaseAccessor.java:94)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DataManager.<init>(DataManager.java:62)
@@ -158,9 +158,9 @@ java.sql.SQLException: The conglomerate (16) requested does not exist.
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.Create_rightpanel(ModelIOFramePlugin.java:612)
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.<init>(ModelIOFramePlugin.java:145)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModule(ClientFrame.java:947)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModules(ClientFrame.java:967)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.start(ClientFrame.java:208)
@@ -229,8 +229,8 @@ ERROR XSAI2: The conglomerate (16) requested does not exist.
 	at org.apache.derby.jdbc.Driver40.getNewEmbedConnection(Unknown Source)
 	at org.apache.derby.jdbc.InternalDriver.connect(Unknown Source)
 	at org.apache.derby.jdbc.AutoloadedDriver.connect(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
-	at java.sql.DriverManager.getConnection(Unknown Source)
+	at java.sql.DriverManager.getConnection(DriverManager.java:664)
+	at java.sql.DriverManager.getConnection(DriverManager.java:247)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<init>(DatabaseAccessor.java:119)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DatabaseAccessor.<clinit>(DatabaseAccessor.java:94)
 	at cn.edu.thss.iise.beehivez.server.datamanagement.DataManager.<init>(DataManager.java:62)
@@ -239,9 +239,9 @@ ERROR XSAI2: The conglomerate (16) requested does not exist.
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.Create_rightpanel(ModelIOFramePlugin.java:612)
 	at cn.edu.thss.iise.beehivez.client.ui.modelio.ModelIOFramePlugin.<init>(ModelIOFramePlugin.java:145)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
-	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
-	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
-	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:422)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModule(ClientFrame.java:947)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.loadModules(ClientFrame.java:967)
 	at cn.edu.thss.iise.beehivez.client.ui.ClientFrame.start(ClientFrame.java:208)

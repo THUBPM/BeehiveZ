@@ -45,7 +45,7 @@ public class main {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		String path = "D:\\实验室\\开题\\model_ZXC\\all_Loop\\origin\\special";
+		String path = "C:\\Users\\lenovo\\Documents\\completeLog";
 		File models = new File(path);
 		String[] modellist = models.list(new FilenameFilter() {
 			

@@ -13,8 +13,6 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 
 import org.hibernate.mapping.Array;
-import org.jbpt.petri.NetSystem;
-import org.jbpt.petri.unfolding.CompletePrefixUnfolding;
 import org.processmining.framework.models.petrinet.PetriNet;
 import org.processmining.framework.models.petrinet.Place;
 import org.processmining.framework.models.petrinet.Transition;
@@ -22,14 +20,11 @@ import org.processmining.framework.models.petrinet.algorithms.PnmlWriter;
 import org.processmining.importing.pnml.PnmlImport;
 import org.processmining.mining.petrinetmining.PetriNetResult;
 
-//import com.iise.shawn.util.PetriNetConversion;
-
 import cern.colt.matrix.DoubleFactory2D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cn.edu.thss.iise.beehivez.server.metric.PetriNetSimilarity;
 import cn.edu.thss.iise.beehivez.server.petrinetunfolding.CompleteFinitePrefix;
 import cn.edu.thss.iise.beehivez.server.util.PetriNetUtil;
-import cn.edu.thss.iise.beehivez.server.metric.rorm.jbpt.conversion.PetriNetConversion;
 
 /**
  * @author little
@@ -69,10 +64,10 @@ public class SSDTSimilarity extends PetriNetSimilarity {
 		FileInputStream fin1 = null;
 		FileInputStream fin2 = null;
 		try {
-			String filePath1 = "D:\\实验室\\开题\\model\\FF301_1.pnml";
+			String filePath1 = "F:\\Demo\\Prom\\M3.pnml";
 			//filePath1 = "D:\\Learn@Tsinghua\\各年级资料\\04b.四年级春季学期\\综合论文训练\\pnml\\original.pnml";
 			String filePath2 = filePath1;
-			filePath2 = "D:\\实验室\\开题\\model\\FF301_1.pnml";
+			filePath2 = "F:\\Demo\\Prom\\M8b.pnml";
 			fin1 = new FileInputStream(filePath1);
 			fin2 = new FileInputStream(filePath2);
 		} catch (FileNotFoundException e) {
@@ -98,12 +93,6 @@ public class SSDTSimilarity extends PetriNetSimilarity {
 		}
 		PetriNet pn1 = pnr1.getPetriNet();
 		PetriNet pn2 = pnr2.getPetriNet();
-		
-		NetSystem ns = PetriNetConversion.convert(pn1);
-		CompletePrefixUnfolding cpu = new CompletePrefixUnfolding(ns);
-		
-		PetriNet p2 = PetriNetConversion.convert(cpu);
-		
 //		CompleteFinitePrefix cfp1 = PetriNetUtil.buildCompleteFinitePrefix(pn1);
 //		BufferedWriter bw;
 //		try {
@@ -119,6 +108,6 @@ public class SSDTSimilarity extends PetriNetSimilarity {
 //			e.printStackTrace();
 //		}
 		SSDTSimilarity ssdSimilarity = new SSDTSimilarity();
-		System.out.println(ssdSimilarity.similarity(p2, pn2));
+		System.out.println(ssdSimilarity.similarity(pn1, pn2));
 	}
 }

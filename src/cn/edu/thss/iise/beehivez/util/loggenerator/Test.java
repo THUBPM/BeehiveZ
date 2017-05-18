@@ -23,7 +23,7 @@ public class Test {
 			PetriNet pn = input.read(is);
 			// LogProduceMethod lpm = new AverageWeightLPM();
 			LogProduceMethod lpm = new StratifiedWeightLPM();
-//			LogManager.generateLog(logPath, 1, lpm, pn);
+			//LogManager.generateLog(logPath, 1, lpm, pn);
 		}
 	}
 

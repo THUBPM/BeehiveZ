@@ -616,14 +616,14 @@ public class PetriNet extends ModelGraph implements Cloneable {
 			Place p = (Place) (it.next());
 			bw.write("p"
 					+ p.getNumber()
-					+ " [shape=\"oval\",label=\""
+					+ " [shape=\"circle\",label=\""
 					+
 					/**
 					 * @todo Review Anne: if place labels shall not be written,
 					 *       the following line can be removed
 					 */
-					 (p.getIdentifier() == null ? "" :
-					 p.getIdentifier().replace('"', '\'')) +
+					// (p.getIdentifier() == null ? "" :
+					// p.getIdentifier().replace('"', '\'')) +
 					(p.getNumberOfTokens() == 0 ? "" : "t:"
 							+ p.getNumberOfTokens()) + "\"];\n");
 
@@ -1156,12 +1156,9 @@ public class PetriNet extends ModelGraph implements Cloneable {
 		Iterator allTransitions = getTransitions().iterator();
 		while (allTransitions.hasNext()) {
 			Transition currentTransition = (Transition) allTransitions.next();
-			if (currentTransition.getIdentifier().startsWith("INV_")) {
+			if (currentTransition.isInvisibleTask() == true) {
 				result.add(currentTransition);
 			}
-//			if (currentTransition.isInvisibleTask() == true) {
-//				result.add(currentTransition);
-//			}
 		}
 		return result;
 	}
@@ -1177,12 +1174,9 @@ public class PetriNet extends ModelGraph implements Cloneable {
 		Iterator allTransitions = getTransitions().iterator();
 		while (allTransitions.hasNext()) {
 			Transition currentTransition = (Transition) allTransitions.next();
-			if (!currentTransition.getIdentifier().startsWith("INV_")) {
+			if (currentTransition.isInvisibleTask() == false) {
 				result.add(currentTransition);
 			}
-//			if (currentTransition.isInvisibleTask() == false) {
-//				result.add(currentTransition);
-//			}
 		}
 		return result;
 	}
@@ -1740,63 +1734,63 @@ public class PetriNet extends ModelGraph implements Cloneable {
 		this.clearElement();
 	}
 
-//	public ModelGraphPanel getGrappaVisualization(ResourcePetriNet resourcePetriNet) {
-//		BufferedWriter bw;
-//		Graph graph;
-//		File dotFile;
-//
-//		try {
-//			// create temporary DOT file
-//			dotFile = File.createTempFile("pmt", ".dot");
-//			// dotFile.deleteOnExit();
-//			bw = new BufferedWriter(new FileWriter(dotFile, false));
-//			writeToDot(bw,resourcePetriNet);
-//			bw.close();
-//
-//			// execute dot and parse the output of dot to create a Graph
-//			Message.add("Parsing DOT-file: " + dotFile.getAbsolutePath(),
-//					Message.DEBUG);
-//			graph = Dot.execute(dotFile.getAbsolutePath());
-//			//dotFile.delete();
-//
-//			visualObject = graph;
-//			Iterator it = getVerticeList().iterator();
-//			while (it.hasNext()) {
-//				((ModelGraphVertex) it.next()).visualObject = null;
-//			}
-//			it = getEdges().iterator();
-//			while (it.hasNext()) {
-//				((ModelGraphEdge) it.next()).visualObject = null;
-//			}
-//
-//			if (graph == null) {
-//				return null;
-//			}
-//
-//		} catch (Exception ex) {
-//			Message.add("Error while performing graph layout: "
-//					+ ex.getMessage(), Message.ERROR);
-//			return null;
-//		}
-//
-//		buildNodeMapping(graph);
-//		buildEdgeMapping(graph);
-//
-//		// adjust some settings
-//		graph.setEditable(true);
-//		graph.setMenuable(true);
-//		graph.setErrorWriter(new PrintWriter(System.err, true));
-//
-//		// create the visual component and return it
-//		ModelGraphPanel gp = new ModelGraphPanel(graph, this);
-//
-//		gp.setScaleToFit(true);
-//
-//		gp.addGrappaListener(new GrappaAdapter());
-//
-//		return gp;
-//		
-//	}
+	public ModelGraphPanel getGrappaVisualization(ResourcePetriNet resourcePetriNet) {
+		BufferedWriter bw;
+		Graph graph;
+		File dotFile;
+
+		try {
+			// create temporary DOT file
+			dotFile = File.createTempFile("pmt", ".dot");
+			// dotFile.deleteOnExit();
+			bw = new BufferedWriter(new FileWriter(dotFile, false));
+			writeToDot(bw,resourcePetriNet);
+			bw.close();
+
+			// execute dot and parse the output of dot to create a Graph
+			Message.add("Parsing DOT-file: " + dotFile.getAbsolutePath(),
+					Message.DEBUG);
+			graph = Dot.execute(dotFile.getAbsolutePath());
+			//dotFile.delete();
+
+			visualObject = graph;
+			Iterator it = getVerticeList().iterator();
+			while (it.hasNext()) {
+				((ModelGraphVertex) it.next()).visualObject = null;
+			}
+			it = getEdges().iterator();
+			while (it.hasNext()) {
+				((ModelGraphEdge) it.next()).visualObject = null;
+			}
+
+			if (graph == null) {
+				return null;
+			}
+
+		} catch (Exception ex) {
+			Message.add("Error while performing graph layout: "
+					+ ex.getMessage(), Message.ERROR);
+			return null;
+		}
+
+		buildNodeMapping(graph);
+		buildEdgeMapping(graph);
+
+		// adjust some settings
+		graph.setEditable(true);
+		graph.setMenuable(true);
+		graph.setErrorWriter(new PrintWriter(System.err, true));
+
+		// create the visual component and return it
+		ModelGraphPanel gp = new ModelGraphPanel(graph, this);
+
+		gp.setScaleToFit(true);
+
+		gp.addGrappaListener(new GrappaAdapter());
+
+		return gp;
+		
+	}
 
 	private void writeToDot(BufferedWriter bw, ResourcePetriNet resourcePetriNet) throws IOException  {
 		initDotWriting(bw,resourcePetriNet);

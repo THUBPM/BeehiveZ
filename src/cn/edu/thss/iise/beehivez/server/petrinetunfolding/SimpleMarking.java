@@ -33,17 +33,12 @@ import org.processmining.framework.models.petrinet.Transition;
  * 
  */
 public class SimpleMarking implements Comparable {
-	protected TreeSet<Place> places;
+	private TreeSet<Place> places;
 
 	public SimpleMarking() {
 		places = new TreeSet<Place>();
 	}
 
-	public TreeSet<Place> getPlaces()
-	{
-		return places;
-	}
-	
 	public void addPlace(Place place) {
 		places.add(place);
 	}

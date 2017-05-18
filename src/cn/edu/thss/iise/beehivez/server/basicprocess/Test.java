@@ -33,8 +33,8 @@ import cn.edu.thss.iise.beehivez.server.metric.BPSSimilarity;
 public class Test {
 	public Test() throws Exception {
 		File[] file2 = new File[2];
-		String fName1 = "C:\\Users\\dongzihe\\Desktop\\毕设代码\\实验模型\\L1.pnml.xml";
-		String fName2 = "C:\\Users\\dongzihe\\Desktop\\毕设代码\\实验模型\\L2.pnml.xml";
+		String fName1 = "temp/model1.pnml";
+		String fName2 = "temp/model2.pnml";
 		FileInputStream inputStream = new FileInputStream(fName1);
 		PnmlImport pnmlImport = new PnmlImport();
 		PetriNet p1 = pnmlImport.read(inputStream);

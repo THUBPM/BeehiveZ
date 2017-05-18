@@ -483,17 +483,11 @@ public class SSDTMatrix
 				int succSSDT = this.computeRecur(tPSuccTran, tJ, ssdtMatrix2d, succTrace, visited, alMatrix, htVertex, traceMatrix2d);
 				if(succSSDT == -3) {
 					return -3;
-				} 
-				else if(!tPSuccTran.getIdentifier().startsWith("INV_")/* || newTi.getAttribute("skip") != null*/) {
+				} else if(!tPSuccTran.isInvisibleTask()/* || newTi.getAttribute("skip") != null*/) {
 					trace.add(tIId);
 					trace.addAll(succTrace);
 					return 1 + succSSDT;
 				} else {
-//				else if(!tPSuccTran.isInvisibleTask()/* || newTi.getAttribute("skip") != null*/) {
-//					trace.add(tIId);
-//					trace.addAll(succTrace);
-//					return 1 + succSSDT;
-//				} else {
 					trace.add(tIId);
 					trace.addAll(succTrace);
 					return succSSDT;
@@ -513,12 +507,9 @@ public class SSDTMatrix
 						tmpVisited.addAll(visitedCopy);
 						int succSSDT = this.computeRecur(tPSuccTran, tJ, ssdtMatrix2d, succTrace, tmpVisited, alMatrix, htVertex, traceMatrix2d);
 						if(succSSDT != -3) {
-							if (!tPSuccTran.getIdentifier().startsWith("INV_")) {
+							if(!tPSuccTran.isInvisibleTask()/* || newTi.getAttribute("skip") != null*/) {
 								++succSSDT;
 							}
-//							if(!tPSuccTran.isInvisibleTask()/* || newTi.getAttribute("skip") != null*/) {
-//								++succSSDT;
-//							}
 							if(minSuccSSDT == -3 || succSSDT < minSuccSSDT) {
 								tmpTrace.clear();
 								tmpTrace.addAll(succTrace);
@@ -564,12 +555,9 @@ public class SSDTMatrix
 					if(succSSDT != -3) {
 						nTotalSSDT += (1 + succSSDT);
 						++nParallel;
-						if(tPSuccTran.getIdentifier().startsWith("INV_")) {
+						if(tPSuccTran.isInvisibleTask()/* && newTi.getAttribute("skip") == null*/) {
 							--nTotalSSDT;
 						}
-//						if(tPSuccTran.isInvisibleTask()/* && newTi.getAttribute("skip") == null*/) {
-//							--nTotalSSDT;
-//						}
 						alSuccTrace.add(succTrace);
 					}
 					for(String s : tmpVisited) {
@@ -591,12 +579,9 @@ public class SSDTMatrix
 							tmpVisited.addAll(visited);
 							int succSSDT = this.computeRecur(tPSuccTran, tJ, ssdtMatrix2d, succTrace, tmpVisited, alMatrix, htVertex, traceMatrix2d);
 							if(succSSDT != -3) {
-								if(!tPSuccTran.getIdentifier().startsWith("INV_")) {
+								if(!tPSuccTran.isInvisibleTask()/* || newTi.getAttribute("skip") != null*/) {
 									++succSSDT;
 								}
-//								if(!tPSuccTran.isInvisibleTask()/* || newTi.getAttribute("skip") != null*/) {
-//									++succSSDT;
-//								}
 								if(minSuccSSDT == -3 || succSSDT < minSuccSSDT) {
 									tmpTrace.clear();
 									tmpTrace.addAll(succTrace);
@@ -688,12 +673,9 @@ public class SSDTMatrix
 			while(itSucc.hasNext()) {
 				Transition pSucc = itSucc.next();
 				String pSuccId = pSucc.getIdentifier();
-				if(hasInv == false && pSucc.getIdentifier().startsWith("INV_")) {
+				if(hasInv == false && pSucc.isInvisibleTask()) {
 					continue;
 				}
-//				if(hasInv == false && pSucc.isInvisibleTask()) {
-//					continue;
-//				}
 				succId.add(pSuccId);
 			}
 		}
@@ -716,12 +698,9 @@ public class SSDTMatrix
 			while(itPred.hasNext()) {
 				Transition pPred = itPred.next();
 				String pPredId = pPred.getIdentifier();
-				if(hasInv == false && pPred.getIdentifier().startsWith("INV_")) {
+				if(hasInv == false && pPred.isInvisibleTask()) {
 					continue;
 				}
-//				if(hasInv == false && pPred.isInvisibleTask()) {
-//					continue;
-//				}
 				predId.add(pPredId);
 			}
 		}
@@ -798,20 +777,14 @@ public class SSDTMatrix
 		//get common transitions
 		for(String s : alOrder1) {
 			ModelGraphVertex v1 = htVertex1.get(s).iterator().next();
-			if(v1 == null || ((Transition)v1).getIdentifier().startsWith("INV_")) {
+			if(v1 == null || ((Transition)v1).isInvisibleTask()) {
 				continue;
 			}
-//			if(v1 == null || ((Transition)v1).isInvisibleTask()) {
-//				continue;
-//			}
 			if(alOrder2.contains(s)) {
 				ModelGraphVertex v2 = htVertex2.get(s).iterator().next();
-				if(v2 == null || ((Transition)v2).getIdentifier().startsWith("INV_")) {
+				if(v2 == null || ((Transition)v2).isInvisibleTask()) {
 					continue;
 				}
-//				if(v2 == null || ((Transition)v2).isInvisibleTask()) {
-//					continue;
-//				}
 				htCommon.put(s, s);
 			}
 		}
@@ -898,12 +871,9 @@ public class SSDTMatrix
 		//Get all visible transitions
 		HashSet<String> hsTVisId = new HashSet<String>();
 		for(Transition t : alTrans) {
-			if(!t.getIdentifier().startsWith("INV_")) {
+			if(!t.isInvisibleTask()) {
 				hsTVisId.add(t.getIdentifier());
 			}
-//			if(!t.isInvisibleTask()) {
-//				hsTVisId.add(t.getIdentifier());
-//			}
 		}
 		//add skip invisible tasks into set
 		ArrayList<String> alSkipTasks = this.getSkipInvisibleTasks(cfp, htVertex);
@@ -1064,10 +1034,8 @@ public class SSDTMatrix
 			while(iStart.hasNext()) {
 				ModelGraphVertex v = iStart.next();
 				String vId = v.getIdentifier();
-				if(vId.split("-")[0].equals(target.split("-")[0])) {
+				if(vId.equals(target)) {
 					return true;
-//				if(vId.equals(target)) {
-//					return true;
 				} else if(visited.contains(vId)) {
 					exclude.add(vId);
 					continue;
