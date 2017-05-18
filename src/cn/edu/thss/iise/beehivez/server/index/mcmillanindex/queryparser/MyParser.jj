@@ -1,0 +1,476 @@
+/* Copyright (c) 2006, Sun Microsystems, Inc.
+ * All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ * 
+ *     * Redistributions of source code must retain the above copyright notice,
+ *       this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in the
+ *       documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the Sun Microsystems, Inc. nor the names of its
+ *       contributors may be used to endorse or promote products derived from
+ *       this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+
+options {
+  LOOKAHEAD = 1;
+  CHOICE_AMBIGUITY_CHECK = 2;
+  OTHER_AMBIGUITY_CHECK = 1;
+  STATIC = false;
+  DEBUG_PARSER = false;
+  DEBUG_LOOKAHEAD = false;
+  DEBUG_TOKEN_MANAGER = false;
+  ERROR_REPORTING = true;
+  JAVA_UNICODE_ESCAPE = false;
+  UNICODE_INPUT = false;
+  IGNORE_CASE = false;
+  USER_TOKEN_MANAGER = false;
+  USER_CHAR_STREAM = false;
+  BUILD_PARSER = true;
+  BUILD_TOKEN_MANAGER = true;
+  SANITY_CHECK = true;
+  FORCE_LA_CHECK = false;
+}
+
+PARSER_BEGIN(MyParser)
+package cn.edu.thss.iise.beehivez.server.index.mcmillanindex.queryparser;
+import java.util.*;
+
+
+public class MyParser {
+
+  /** Main entry point. */
+  /*
+  public static void main(String args[]) {
+    MyParser parser;
+    Query q;
+      System.out.println("Reading from file . . .");
+      parser = new Simple1(FileInputStream("C:\\test2.txt"));
+    
+    try {
+      q = parser.Start();
+      System.out.println("Parsed successfully.");
+      
+    } catch (ParseException e) {
+      System.out.println(e.getMessage());
+      System.out.println("Encountered errors during parse.");
+    }
+  }
+  */
+}
+
+PARSER_END(MyParser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+/* RESERVED WORDS */
+
+TOKEN :
+{
+  < BINLOGOP: <AND> | <OR> >
+| < #AND: "&&" >
+| < #OR: "||">
+
+| < UNLOGOP: <NOT> >
+| < #NOT: "!" >
+
+| < TASKCOMPOP :  "succof" | "predof" | "isuccof" | "ipredof" | "concur" | "exclusive"
+| "alwsuccany" | "alwsuccevery" | "possuccany" | "possuccevery"
+| "alwpredany" | "alwpredevery" | "pospredany" | "pospredevery"
+| "alwisuccany" | "alwisuccevery" | "posisuccany" | "posisuccevery"
+| "alwipredany" | "alwipredevery" | "posipredany" | "posipredevery" >
+
+
+| < SETCOMOP : <IDENTICAL> | <SUBSETOF> | <OVERLAP> >
+| < #IDENTICAL: "identical">
+| < #SUBSETOF: "subsetof" >
+| < #OVERLAP: "overlap">
+
+| < SETOP : <UNION> | <DIFFERENT> | <INTERSECT> >
+| < #UNION: "union" >
+| < #DIFFERENT: "different">
+| < #INTERSECT: "intersect" >
+
+| < EXIST: "exist">
+
+| < ANYALL : <ANY> | <ALL> >
+| < #ANY: "any" >
+| < #ALL: "all">
+
+| < LIST: "list" >
+| < PROCESS: "process">
+| < WHERE: "where">
+}
+
+/* IDENTIFIERS */
+
+TOKEN :
+{
+	<IDENTIFIER: <WORD> (" " <WORD>)* >
+	
+|  <#WORD : <LETTER> (<PART_LETTER>)* >
+
+| < #LETTER:
+      [  // all chars for which Character.isIdentifierStart is true
+         "$",
+         "A"-"Z",
+         "_",
+         "a"-"z"
+      ]
+      >
+      
+| < #PART_LETTER:
+      [  // all chars for which Character.isIdentifierPart is true
+         "$",
+         "0"-"9",
+         "A"-"Z",
+         "_",
+         "a"-"z"
+	  ]
+	  >
+}
+
+/* VARIABLE NAME */
+
+TOKEN :
+{
+	<VARIABLE: "@" <WORD>>
+}
+
+/* NUMBERS */
+
+TOKEN :
+{
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (<EXPONENT>)? (["f","F","d","D"])?
+      | "." (["0"-"9"])+ (<EXPONENT>)? (["f","F","d","D"])?
+      | (["0"-"9"])+ <EXPONENT> (["f","F","d","D"])?
+      | (["0"-"9"])+ (<EXPONENT>)? ["f","F","d","D"]
+  >
+|
+  < #EXPONENT: ["e","E"] (["+","-"])? (["0"-"9"])+ >
+}
+
+/* SEPARATORS */
+
+TOKEN :
+{
+  < LPAREN: "(" >
+| < RPAREN: ")" >
+| < LBRACE: "{" >
+| < RBRACE: "}" >
+| < LBRACKET: "[" >
+| < RBRACKET: "]" >
+| < SEMICOLON: ";" >
+| < COMMA: "," >
+| < EQUAL: "=" >
+}
+
+/** Root production. */
+Query Start():
+{
+	Query result;
+	Assignments assignments = null;
+	Predict predict = null;
+}
+{
+	[assignments = Assignments()] predict = Predict() <EOF>
+	{
+		result = new Query(assignments, predict);
+		return result;
+	}
+}
+
+/** Assignment production. */
+Assignments Assignments():
+{
+	Assignments result = null;
+	TaskSet taskset;
+	Token temp;
+}
+{
+	"{" temp = <VARIABLE> <EQUAL> taskset = TaskSet() [result = AssignmentsTail()] "}"
+	{
+		if(result == null)
+		{
+			result = new Assignments();			
+		}
+		result.addAssignment(temp.toString(), taskset);
+		return result;
+	}
+}
+
+Assignments AssignmentsTail():
+{
+	Assignments result = null;
+	TaskSet taskset;
+	Token temp;
+}
+{
+	";" temp = <VARIABLE> <EQUAL> taskset = TaskSet() [result = AssignmentsTail()]
+	{
+		if(result == null)
+		{
+			result = new Assignments();			
+		}
+		result.addAssignment(temp.toString(), taskset);
+		return result;
+	}
+}
+
+Predict PRETSTail():
+{
+	TaskSet ts;
+	Token temp;
+	Token anyall = null;
+	Predict result;
+}
+{
+	<EXIST>
+	{
+		result = new Predict(3);
+		return result;
+	}
+	
+|	temp = <SETCOMOP> ts = TaskSet() 
+	{
+		result = new Predict(4);
+		result.setOp(temp.toString());
+		result.taskset2 = ts;
+		return result;
+	}
+	
+|	temp = <TASKCOMPOP> ts = TaskSet() [anyall = <ANYALL>]
+	{
+		
+		result = new Predict(5);
+		result.setOp(temp.toString());
+		if(anyall == null){
+			result.setAnyall("all");
+		}
+		else{
+			result.setAnyall(anyall.toString());
+		}
+		result.taskset2 = ts;
+		return result;
+	}
+	
+}
+
+/** Predict production. */
+Predict Predict():
+{
+	Predict result;
+	TaskSet ts1;
+	Predict preTail = null;
+	Predict pretstail = null;
+}
+{
+	
+	<UNLOGOP> result = Predict() [preTail = PredictTail()]
+	{
+		result = new Predict(result);
+		if(preTail != null){
+			preTail.predict1 = result;
+			return preTail;
+		}
+		return result;
+	}
+
+|   "(" result = Predict() ")" [preTail = PredictTail()]
+	{
+		if(preTail != null){
+			preTail.predict1 = result;
+			return preTail;
+		}
+		return result;
+	}
+	
+|	ts1 = TaskSet() pretstail = PRETSTail() [preTail = PredictTail()]
+	{
+		pretstail.taskset1 = ts1;
+		if(preTail != null){
+			preTail.predict1 = pretstail;
+			return preTail;
+		}
+		return pretstail;
+	}
+	
+//|	"(" result = Predict() ")" [preTail = PredictTail()]//	{//		if(preTail != null){//			preTail.predict1 = result;//			return preTail;//		}//		return result;//	}
+	
+//|   <EXIST> ts1 = TaskSet()//	{//		result = new Predict(ts1);//		return result;//	}//	//|	temp = <SETCOMOP> ts1 = TaskSet() ts2 = TaskSet()//	{//		result = new Predict(temp.toString(), ts1, ts2);//		return result;//	}//	//|	temp = <TASKCOMPOP> ts1 = TaskSet() ts2 = TaskSet() anyall = <ANYALL>//	{//		result = new Predict(temp.toString(), ts1, ts2, anyall.toString());	//		return result;//	}
+}
+
+Predict PredictTail():
+{
+	Predict result;	
+	Predict pre;
+	Predict preTail = null;
+	Token temp;
+}
+{
+	temp = <BINLOGOP> pre = Predict() [preTail = PredictTail()]
+	{
+		result = new Predict(1);
+		result.setOp(temp.toString());
+		result.predict2 = pre;
+		if(preTail != null){
+			preTail.predict1 = result;
+			return preTail;
+		}
+		return result;
+	}
+}
+
+TaskSet TSTail():
+{
+	TaskSet ts;
+	Token temp;
+	TaskSet tstail = null;
+	TaskSet result;
+}
+{
+	temp = <SETOP> ts = TaskSet() [tstail = TSTail()]
+	{
+		result = new TaskSet(2);
+		result.setOp(temp.toString());
+		result.taskset2 = ts;
+		if(tstail != null){
+			tstail.taskset1 = result;
+			return tstail;
+		}
+		return result;
+	}
+}
+
+/** TaskSet production. */
+TaskSet TaskSet() :
+{
+	TaskSet result; 
+	Token temp;
+	TaskSet ts1;
+	TaskSet ts2;
+	Token anyall = null;
+	TaskSet tstail = null;
+}
+{
+  "[" result = TaskSetExp() "]" [tstail = TSTail()]
+  { 
+  	if(tstail != null){
+			tstail.taskset1 = result;
+			return tstail;
+		}
+  	return result;
+  }
+
+// Var name  
+| temp = <VARIABLE> [tstail = TSTail()]
+  {
+  	result = new TaskSet(temp.toString());
+  	if(tstail != null){
+			tstail.taskset1 = result;
+			return tstail;
+		}
+  	return result;
+  }
+
+// 
+| "<" result = TaskSet() ">" [tstail = TSTail()]
+  {
+  	if(tstail != null){
+			tstail.taskset1 = result;
+			return tstail;
+		}
+  	return result;
+  }
+
+// Application  
+| temp = <TASKCOMPOP> ts1 = TaskSet() [anyall = <ANYALL>] [tstail = TSTail()]
+  {
+  	if(anyall == null){
+  	    result = new TaskSet(temp.toString(), ts1,"all");
+  	}
+	else{
+  	result = new TaskSet(temp.toString(), ts1, anyall.toString());
+	}
+  	if(tstail != null){
+			tstail.taskset1 = result;
+			return tstail;
+		}
+  	return result;
+  }
+	
+}
+
+TaskSet TaskSetExp():
+{
+	TaskSet result = null;
+	Token add = null;
+	Double sim = 1.0;
+
+}
+{
+	add = <IDENTIFIER> [sim = Similarity()]  [result = TaskSetExpTail()] 
+	{
+		if(result == null){
+			result = new TaskSet();
+		}
+		result.addTask(add.toString(), sim);
+		return result;
+	}	
+}
+
+TaskSet TaskSetExpTail() :
+{
+	TaskSet result = null;
+	Token add = null;
+	Double sim = 1.0;
+}
+{
+	"," add = <IDENTIFIER> [sim = Similarity()] [result = TaskSetExpTail()] 
+	{
+		if(result == null){
+			result = new TaskSet();
+		}
+		result.addTask(add.toString(), sim);
+		return result;
+	}
+}
+
+Double Similarity():
+{
+	Token sim;
+}
+{
+	"(" sim = <FLOATING_POINT_LITERAL> ")"
+	{
+		return Double.parseDouble(sim.toString());
+	}
+}
+
+
+
+
+
+
